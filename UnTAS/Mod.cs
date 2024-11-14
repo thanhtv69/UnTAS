@@ -10,14 +10,11 @@ namespace UnTAS
     public class Mod : MelonMod
     {
         public static float prevTimeScale = 1f;
-        public static float baseTimeScale = 1f;
+        public static float baseTimeScale = 1.3f;
         public static bool frozen = false;
 
-        public static string version = "0.0.2";
-        public static bool updated;
-
-        public static KeyCode SlowKey = KeyCode.Minus;
-        public static KeyCode FastKey = KeyCode.Equals;
+        public static KeyCode SlowKey = KeyCode.F1;
+        public static KeyCode FastKey = KeyCode.F2;
         public static KeyCode PauseKey = KeyCode.R;
         public static KeyCode ResetKey = KeyCode.M;
 
@@ -28,30 +25,12 @@ namespace UnTAS
         
         public static void DrawWatermark()
         {
-            string addition;
-            if(updated)
-            {
-                addition = "updated";
-            }
-            else
-            {
-                addition = "out of date";
-            }
-            GUI.Label(new Rect((Screen.width / 2) - 150, Screen.height - 60, 1000, 200), "<b><color=white><size=30>UnTAS v" + version + " (" + addition + ")</size></color></b>");
+            //GUI.Label(new Rect((Screen.width / 2) - 120, Screen.height - 60, 1000, 200), "<b><color=red><size=20>Speed:" + baseTimeScale + "</size></color></b>");
+            GUI.Label(new Rect(40, Screen.height - 60, 1000, 200), "<b><color=red><size=20>Speed:" + baseTimeScale + "</size></color></b>");
         }
 
         public override void OnInitializeMelon()
         {
-            WebClient wb = new WebClient();
-            string latest = wb.DownloadString("https://raw.githubusercontent.com/EnderEye/UnTAS/master/version");
-            if(latest == version + "\n")
-            {
-                updated = true;
-            }
-            else
-            {
-                updated = false;
-            }
             MelonEvents.OnGUI.Subscribe(DrawWatermark, 101);
         }
 
